@@ -1,0 +1,15 @@
+C:UsersoemDesktop학술제Unknown_EntityUnknownEntity_Datalevel1.resS[[:space:]]*.resS
+git[[:space:]]lfs[[:space:]]track[[:space:]]C:/Users/oem/Desktop/학술제/Unknown_Entity/UnknownEntity_Data/level1.resS filter=lfs diff=lfs merge=lfs -text
+*.resS filter=lfs diff=lfs merge=lfs -text
+C:UsersoemDesktop학술제Unknown_EntityUnknownEntity_Datalevel1.resS[[:space:]]*.resS
+git[[:space:]]add[[:space:]].gitattributes
+git[[:space:]]lfs[[:space:]]ls-files
+git[[:space:]]lfs[[:space:]]track[[:space:]]C:UsersoemDesktop학술제Unknown_EntityUnknownEntity_Datalevel1.resS[[:space:]]*.resS
+ filter=lfs diff=lfs merge=lfs -text
+C:/Users/oem/Desktop/학술제/Unknown_Entity/UnknownEntity_Data/level1.resS filter=lfs diff=lfs merge=lfs -text
+C:/Users/oem/Desktop/학술제/Unknown_Entity/UnknownEntity_Data/level1.resS filter=lfs diff=lfs merge=lfs -text
+C:/Users/oem/Desktop/학술제/Unknown_Entity/UnknownEntity_Data/level1.resS filter=lfs diff=lfs merge=lfs -text
+.resS filter=lfs diff=lfs merge=lfs -text
+C:/Users/oem/Desktop/학술제/Unknown_Entity/UnknownEntity_Data/level1.resS filter=lfs diff=lfs merge=lfs -text
+level1.resS filter=lfs diff=lfs merge=lfs -text
+C://Users//oem//Desktop//학술제//Unknown_Entity//UnknownEntity_Data//level1.resS filter=lfs diff=lfs merge=lfs -text

@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ch_Move1 : MonoBehaviour
 {
-    public float moveSpeed = 5f; // 이동 속도
-    public float jumpForce = 10f; // 점프 힘
+    public float walkSpeed = 5f; // 기본 이동 속도
+    public float runSpeed = 10f; // 달리기 속도
     public float lookSpeed = 2f; // 마우스로 회전하는 속도
     private Rigidbody rb;
-
+    private bool get_key = false; //키 보유 여부 시작은 false
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,9 @@ public class ch_Move1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Shift 키가 눌렸는지 확인하여 이동 속도 결정
+        float moveSpeed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? runSpeed : walkSpeed;
+
         // 키 입력 받기
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -38,11 +43,26 @@ public class ch_Move1 : MonoBehaviour
         Vector3 currentRotation = transform.localRotation.eulerAngles;
         currentRotation.y += mouseX;
         transform.localRotation = Quaternion.Euler(currentRotation);
+    }
 
-        // 점프하기
-        if (Input.GetButtonDown("Jump"))
+    void OnTriggerEnter(Collider other) //충돌처리
+    {
+        if (other.CompareTag("Exit")) //충돌한 오브젝트의 테그 비교
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            if(get_key==true)
+            {
+                SceneManager.LoadScene("SceneLoad"); //Base씬으로 이동
+            }
         }
+
+        else if(other.CompareTag("key"))
+        {
+            get_key = true;
+        }
+    }
+
+    public void LoadScene(string sceneName) 
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

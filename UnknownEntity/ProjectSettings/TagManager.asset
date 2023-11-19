@@ -3,12 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Exit
+  - key
+  - Map
+  - SubCamera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Map
   - Water
   - UI
   - 
@@ -36,7 +40,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - DigitalHuman_Tearline
   m_SortingLayers:
   - name: Default
     uniqueID: 0
