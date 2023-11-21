@@ -33,6 +33,7 @@ public class ch_Move1 : MonoBehaviour
         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
         Vector3 moveDirection = transform.TransformDirection(movement);
 
+        
         // 이동하기
         rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.deltaTime);
 
