@@ -24,13 +24,13 @@ public class SchoolBusMovement : MonoBehaviour
         Invoke("StopMoving", 24.0f);
 
         // 1초부터 24초까지 0.05씩 증가하면서 PlayFootstepSound 메서드 호출
-        for (float t = 1.0f; t <= 25.0f; t += 0.02f)
+        for (float t = 1.0f; t <= 22.0f; t += 0.02f)
         {
             Invoke("PlayFootstepSound", t);
         }
 
         // 26초 후에 PlayOtherSound 메서드 호출
-        Invoke("PlayOtherSound", 28.2f);
+        Invoke("PlayOtherSound", 25.2f);
     }
 
     void Update()

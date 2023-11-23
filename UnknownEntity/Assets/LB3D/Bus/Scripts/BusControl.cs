@@ -26,7 +26,7 @@ public class BusControl : MonoBehaviour
         }
 
         // 30초 후에 OpenDoors 메서드 호출
-        Invoke("OpenDoors", 32.0f);
+        Invoke("OpenDoors", 29.0f);
     }
 
     void OpenDoors()

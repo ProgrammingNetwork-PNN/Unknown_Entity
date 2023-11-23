@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
             walkTimer += Time.deltaTime;
             PlayFootstepSound();
 
-            if (walkTimer >= 20.0f)
+            if (walkTimer >= 17.0f)
             {
                 isWalking = false;
                 rotationTimer = 0.0f;
@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
                 isWalking = true;
                 rotationComplete = false;
                 turnBackComplete = false;
+                //lookUpComplete = false;  // Resetting lookUpComplete
                 lookDownComplete = false;
                 rotationSequenceCount++; // Increment the rotation sequence count
             }
