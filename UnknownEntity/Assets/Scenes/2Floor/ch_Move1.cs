@@ -1,20 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class ch_Move1 : MonoBehaviour
 {
     public float walkSpeed = 5f; // 기본 이동 속도
-    public float runSpeed = 10f; // 달리기 속도
+    public float runSpeed = 0f; // 달리기 속도
     public float lookSpeed = 2f; // 마우스로 회전하는 속도
+    public GameObject mon;
     private Rigidbody rb;
+    private Transform player;
     private bool get_key = false; //키 보유 여부 시작은 false
-    // Start is called before the first frame update
+    public float stamina;
+    Vector3 savepoint;
     void Start()
     {
+        stamina = 100;
         rb = GetComponent<Rigidbody>();
+        player = GetComponent<Transform>();
         rb.freezeRotation = true; // 캐릭터의 회전을 고정
         Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 숨기기
     }
@@ -22,9 +24,8 @@ public class ch_Move1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Shift 키가 눌렸는지 확인하여 이동 속도 결정
         float moveSpeed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? runSpeed : walkSpeed;
-
+        
         // 키 입력 받기
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -33,7 +34,6 @@ public class ch_Move1 : MonoBehaviour
         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
         Vector3 moveDirection = transform.TransformDirection(movement);
 
-        
         // 이동하기
         rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.deltaTime);
 
@@ -48,17 +48,37 @@ public class ch_Move1 : MonoBehaviour
 
     void OnTriggerEnter(Collider other) //충돌처리
     {
+        Debug.Log("d");
         if (other.CompareTag("Exit")) //충돌한 오브젝트의 테그 비교
         {
-            if(get_key==true)
+            if (get_key == true)
             {
                 SceneManager.LoadScene("SceneLoad"); //Base씬으로 이동
             }
         }
-
-        else if(other.CompareTag("key"))
+        
+        if (other.CompareTag("key"))
         {
             get_key = true;
+        }
+        
+        if (other.CompareTag("Trigger"))
+        {
+            if (get_key == true)
+            {
+                mon.SetActive(true);
+            }
+            else
+            {
+                savepoint = transform.position;
+            }
+        }
+        
+        if(other.CompareTag("Monster"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            transform.position = savepoint;
+            Debug.Log("w");
         }
     }
 

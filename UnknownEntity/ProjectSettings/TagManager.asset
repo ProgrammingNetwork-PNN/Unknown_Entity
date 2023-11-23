@@ -7,7 +7,8 @@ TagManager:
   - Exit
   - key
   - Map
-  - SubCamera
+  - Trigger
+  - Monster
   layers:
   - Default
   - TransparentFX
