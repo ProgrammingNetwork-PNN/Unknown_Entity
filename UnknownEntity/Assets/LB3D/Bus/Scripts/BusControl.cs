@@ -15,6 +15,10 @@ public class BusControl : MonoBehaviour
     public float OpenCloseSpeed;
 
     private bool isOpen = false;
+    private float timer = 0f;
+    private bool canvasActivated = false;
+
+    public Canvas yourCanvas; // Canvas 오브젝트를 연결하세요
 
     void Start()
     {
@@ -27,6 +31,17 @@ public class BusControl : MonoBehaviour
 
         // 30초 후에 OpenDoors 메서드 호출
         Invoke("OpenDoors", 29.0f);
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (!canvasActivated && timer >= 31.0f)
+        {
+            ActivateCanvas();
+            canvasActivated = true;
+        }
     }
 
     void OpenDoors()
@@ -76,6 +91,16 @@ public class BusControl : MonoBehaviour
         else
         {
             Open(true);
+        }
+    }
+
+    void ActivateCanvas()
+    {
+        // 31초 후에 Canvas를 활성화
+        if (yourCanvas != null)
+        {
+            yourCanvas.enabled = true;
+            Debug.Log("Canvas activated!");
         }
     }
 }
