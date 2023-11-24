@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MoveObject : MonoBehaviour
@@ -7,6 +8,9 @@ public class MoveObject : MonoBehaviour
     public float rotationSpeed = 30.0f; // 추가된 회전 속도
     public float xRotationTarget = -20.0f; // 목표 회전 X 값
     public float xRotationReturnSpeed = 6.0f; // 되돌리기 속도
+    public float xRotationRestoreDelay = 3.0f; // 추가된 회전 이후에 복원 시작할 시간
+    public float xRotationRestoreAmount = 20.0f; // 복원할 회전량
+    public float yRotationTarget = 90.0f; // 목표 회전 Y 값
 
     private bool isMoving = true;
     private bool isRotationDone = false;
@@ -19,7 +23,7 @@ public class MoveObject : MonoBehaviour
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
             // 10초 후에 스크립트 비활성화
-            Invoke("DisableMovement", 10.0f);
+            Invoke("DisableMovement", 15.0f);
         }
         else if (!isRotationDone)
         {
@@ -27,12 +31,11 @@ public class MoveObject : MonoBehaviour
             float rotationStep = rotationSpeed * Time.deltaTime;
             transform.Rotate(Vector3.up, rotationStep);
 
-            // 회전이 완료되면 X 회전값을 -20으로 설정하고 3초간 유지
+            // 회전이 완료되면 X 회전값을 -20으로 설정하고 천천히 이동
             if (transform.rotation.eulerAngles.y >= 270.0f)
             {
                 isRotationDone = true;
-                transform.rotation = Quaternion.Euler(xRotationTarget, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-                Invoke("ReturnToZeroXRotation", 3.0f);
+                StartCoroutine(SmoothReturnToZeroXRotation());
             }
         }
     }
@@ -43,17 +46,69 @@ public class MoveObject : MonoBehaviour
         isMoving = false;
     }
 
-    void ReturnToZeroXRotation()
+    IEnumerator SmoothReturnToZeroXRotation()
     {
-        // 1초 동안 X 회전값을 0으로 되돌리기
-        float newXRotation = Mathf.MoveTowards(transform.rotation.eulerAngles.x, 0.0f, xRotationReturnSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.Euler(newXRotation, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        float elapsed_time = 0.0f;
+        float startRotationX = transform.rotation.eulerAngles.x;
 
-        // 되돌리기가 완료되면 스크립트 비활성화
-        if (newXRotation == 0.0f)
+        while (elapsed_time < xRotationReturnSpeed)
         {
-            DisableScript();
+            float newRotationX = Mathf.Lerp(startRotationX, xRotationTarget, elapsed_time / xRotationReturnSpeed);
+            transform.rotation = Quaternion.Euler(newRotationX, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+            elapsed_time += Time.deltaTime;
+            yield return null;
         }
+
+        // 마지막에 정확하게 목표로 설정
+        transform.rotation = Quaternion.Euler(xRotationTarget, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+        // 지연 후 Rotaion X를 0으로 되돌리는 코루틴 시작
+        yield return new WaitForSeconds(xRotationRestoreDelay);
+        StartCoroutine(SmoothReturnToZeroXRotationX());
+    }
+
+    IEnumerator SmoothReturnToZeroXRotationX()
+    {
+        float elapsed_time = xRotationReturnSpeed;
+        float startRotationX = transform.rotation.eulerAngles.x;
+        float targetRotationX = xRotationTarget; // 목표 회전 X 값으로 변경
+
+        while (elapsed_time > 0.0f)
+        {
+            // 여기서 수정
+            float newRotationX = Mathf.MoveTowards(startRotationX, targetRotationX, (xRotationReturnSpeed - elapsed_time) / xRotationReturnSpeed);
+            transform.rotation = Quaternion.Euler(newRotationX, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+            elapsed_time -= Time.deltaTime;
+            yield return null;
+        }
+
+        // 마지막에 정확하게 목표로 설정
+        transform.rotation = Quaternion.Euler(targetRotationX, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+        // 되돌리기가 완료되면 Y 회전값을 90으로 설정하고 천천히 이동
+        StartCoroutine(SmoothRotateToYTarget());
+    }
+
+
+    IEnumerator SmoothRotateToYTarget()
+    {
+        float startRotationY = transform.rotation.eulerAngles.y;
+        float targetRotationY = yRotationTarget;
+
+        while (Mathf.Abs(targetRotationY - transform.rotation.eulerAngles.y) > 0.01f)
+        {
+            float step = rotationSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.rotation.eulerAngles.x, targetRotationY, transform.rotation.eulerAngles.z), step);
+            yield return null;
+        }
+
+        // 마지막에 정확하게 목표로 설정
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, targetRotationY, transform.rotation.eulerAngles.z);
+
+        // 회전이 완료되면 스크립트 비활성화
+        DisableScript();
     }
 
     void DisableScript()

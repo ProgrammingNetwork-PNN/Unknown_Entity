@@ -4069,10 +4069,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba664ad7b416f734d9aaf1009e91638f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rotationSpeed: 30
+  moveSpeed: 4
+  rotationSpeed: 70
   xRotationTarget: -20
-  xRotationReturnSpeed: 6
+  xRotationReturnSpeed: 3
+  xRotationRestoreDelay: 3
+  xRotationRestoreAmount: 20
+  yRotationTarget: -270
 --- !u!81 &442075856
 AudioListener:
   m_ObjectHideFlags: 0
