@@ -99,7 +99,7 @@ public class BusControl : MonoBehaviour
         // 31초 후에 Canvas를 활성화
         if (yourCanvas != null)
         {
-            yourCanvas.enabled = true;
+            yourCanvas.gameObject.SetActive(true);
             Debug.Log("Canvas activated!");
         }
     }
