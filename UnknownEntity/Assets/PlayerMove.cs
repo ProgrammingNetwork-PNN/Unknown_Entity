@@ -1,19 +1,18 @@
 using System.Collections;
-using System.Diagnostics;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float walkSpeed = 5f;
-    public float runSpeed = 10f;
+    public float walkSpeed = 10f;
     public float lookSpeed = 2f;
-    public float upperLookLimit = 80f;
-    public float lowerLookLimit = 80f;
+    public float upperLookLimit = 60f;
+    public float lowerLookLimit = 60f;
+
+    public AudioClip footstepsSound;
+    private AudioSource audioSource;
 
     private Rigidbody rb;
     private Animator anim;
-    private bool isWalking = false;
-    private bool isRunning = false;
     private float rotationX = 0;
 
     void Start()
@@ -22,23 +21,70 @@ public class PlayerMove : MonoBehaviour
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
         anim = GetComponent<Animator>();
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.loop = false;
+        audioSource.volume = 0.5f;
+        audioSource.playOnAwake = false;
     }
 
     void Update()
     {
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
-        Vector3 movement = new Vector3(0f, 0f, verticalInput).normalized;
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        {
+            anim.SetBool("isWalking", true);
+            anim.SetBool("isBack", false);
+            anim.SetBool("isLeft", false);
+            anim.SetBool("isRight", false);
+        }
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            anim.SetBool("isBack", true);
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isLeft", false);
+            anim.SetBool("isRight", false);
+        }
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isBack", false);
+            anim.SetBool("isLeft", true);
+            anim.SetBool("isRight", false);
+        }
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isBack", false);
+            anim.SetBool("isLeft", false);
+            anim.SetBool("isRight", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isBack", false);
+            anim.SetBool("isLeft", false);
+            anim.SetBool("isRight", false);
+        }
+
+        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+
+        if (movement.magnitude > 1f)
+            movement.Normalize();
+
         Vector3 moveDirection = transform.TransformDirection(movement);
 
-        bool isShiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        isRunning = isShiftPressed && verticalInput > 0.1f;
-
-        anim.SetBool("isWalking", verticalInput > 0.1f);
-        anim.SetBool("isRunning", isRunning);
-
-        float moveSpeed = isRunning ? runSpeed : (isWalking ? walkSpeed : 0f);
-        rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.deltaTime);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, moveDirection, out hit, walkSpeed * Time.deltaTime))
+        {
+            rb.MovePosition(rb.position + moveDirection.normalized * hit.distance);
+        }
+        else
+        {
+            rb.MovePosition(rb.position + moveDirection * walkSpeed * Time.deltaTime);
+        }
 
         float mouseX = Input.GetAxis("Mouse X") * lookSpeed;
         float mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
@@ -52,8 +98,14 @@ public class PlayerMove : MonoBehaviour
 
         Camera.main.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
 
-        // 디버깅을 위해 콘솔에 값 출력
-        UnityEngine.Debug.Log("Vertical Input: " + verticalInput);
-        UnityEngine.Debug.Log("Move Speed: " + moveSpeed);
+        if (movement.magnitude > 0.1f && !audioSource.isPlaying)
+        {
+            audioSource.clip = footstepsSound;
+            audioSource.Play();
+        }
+        else if (movement.magnitude < 0.1f && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 }
