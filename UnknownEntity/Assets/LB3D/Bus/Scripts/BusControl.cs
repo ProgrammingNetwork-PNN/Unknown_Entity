@@ -100,7 +100,6 @@ public class BusControl : MonoBehaviour
         if (yourCanvas != null)
         {
             yourCanvas.gameObject.SetActive(true);
-            Debug.Log("Canvas activated!");
         }
     }
 }

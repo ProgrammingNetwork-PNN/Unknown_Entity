@@ -4079,6 +4079,8 @@ MonoBehaviour:
   xRotationRestoreDelay: 3
   xRotationRestoreAmount: 20
   yRotationTarget: -270
+  moveSound: {fileID: 8300000, guid: 2d4a72619312dc946be16236ca6ec5a5, type: 3}
+  rotationSound: {fileID: 0}
 --- !u!81 &442075856
 AudioListener:
   m_ObjectHideFlags: 0
@@ -16255,6 +16257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 12
   footstepSound: {fileID: 8300000, guid: 786d94ad3932fcd44abe93a08d58426c, type: 3}
+  stoppingSound: {fileID: 8300000, guid: e42e2f5985dfd154b9f8d65d3187c53c, type: 3}
   otherSound: {fileID: 8300000, guid: a100b69890a2f1e49badc294f9b9fd61, type: 3}
   maxFootstepVolume: 1
 --- !u!1 &1804332202
