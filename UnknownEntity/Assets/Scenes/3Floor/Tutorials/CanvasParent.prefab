@@ -147,7 +147,7 @@ PrefabInstance:
     - target: {fileID: 792874605214253954, guid: e7d80c4e434a4c6489329a5cd3bff3b2, type: 3}
       propertyPath: m_FontData.m_Font
       value: 
-      objectReference: {fileID: 12800000, guid: 36fb194602ca2994282dfef4d1c7eba8, type: 3}
+      objectReference: {fileID: 12800000, guid: 01c4382f070449b4c9e04f3c14aa78d2, type: 3}
     - target: {fileID: 792874605214253954, guid: e7d80c4e434a4c6489329a5cd3bff3b2, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 300
@@ -163,6 +163,10 @@ PrefabInstance:
     - target: {fileID: 792874605214253954, guid: e7d80c4e434a4c6489329a5cd3bff3b2, type: 3}
       propertyPath: m_FontData.m_Alignment
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 792874605214253954, guid: e7d80c4e434a4c6489329a5cd3bff3b2, type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 792874605214253954, guid: e7d80c4e434a4c6489329a5cd3bff3b2, type: 3}
       propertyPath: m_FontData.m_VerticalOverflow
