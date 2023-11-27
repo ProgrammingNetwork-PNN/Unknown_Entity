@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45625794, g: 0.48161787, b: 0.48009586, a: 1}
+  m_IndirectSpecularColor: {r: 0.456257, g: 0.4816172, b: 0.4800948, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -255,7 +255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -534}
+  m_AnchoredPosition: {x: 0, y: -625}
   m_SizeDelta: {x: 400, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &27628308
@@ -270,8 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c4165fa904ebf4ebbc799fa98ada21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
-  totalTime: 120
+  moveSpeed: 40
+  totalTime: 100
 --- !u!114 &27628309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2169,7 +2169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -19, y: -1627}
+  m_AnchoredPosition: {x: -19, y: -1775}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &236093188
@@ -2236,8 +2236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace89257cccc1b14a98088b580669c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
-  totalTime: 120
+  moveSpeed: 40
+  totalTime: 180
   moveSound: {fileID: 8300000, guid: 9b011b261451448059f85fb2648a1655, type: 3}
   soundVolume: 0.5
 --- !u!1001 &240224067
@@ -14588,6 +14588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yourCanvas: {fileID: 1701484377}
   fadeDuration: 5
+  musicAudioSource: {fileID: 0}
 --- !u!1001 &1586933550
 PrefabInstance:
   m_ObjectHideFlags: 0

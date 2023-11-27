@@ -5,17 +5,17 @@ using UnityEngine.UI;
 public class CanvasController : MonoBehaviour
 {
     public Canvas yourCanvas;
-    public float fadeDuration = 2.0f; // fade-in 소요 시간 설정
+    public float fadeDuration = 2.0f; // 페이드인에 걸리는 시간
+    public AudioSource musicAudioSource; // 음악을 재생하는 오디오 소스에 대한 참조
 
     private Image panelImage;
     private float timer = 0f;
 
     void Start()
     {
-
         if (yourCanvas != null)
         {
-            // Panel의 Image 컴포넌트 가져오기
+            // 패널의 이미지 컴포넌트 가져오기
             panelImage = yourCanvas.GetComponentInChildren<Image>();
 
             // 시작 시의 알파 값 설정
@@ -32,36 +32,44 @@ public class CanvasController : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        // 일정 시간 이후에 Canvas를 활성화하고 fade-in 효과 시작
-        if (!yourCanvas.enabled && timer >= 4.0f)
+        // 일정 시간 이후에 Canvas를 활성화하고 페이드인 효과 시작
+        if (!yourCanvas.enabled && timer >= 2.0f)
         {
             yourCanvas.enabled = true;
 
-            // fade-in 효과를 위한 Coroutine 시작
+            // 페이드인 효과를 위한 Coroutine 시작
             StartCoroutine(FadeIn());
+        }
+
+        // 음악이 끝나면 게임 종료
+        if (!musicAudioSource.isPlaying)
+        {
+            // 게임 종료 또는 다른 종료 로직을 호출하십시오.
+            EndGame();
         }
     }
 
     IEnumerator FadeIn()
     {
-        // 현재 시간
         float elapsedTime = 0f;
 
         while (elapsedTime < fadeDuration)
         {
-            // 알파 값 조절
             float alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
 
-            // Color를 설정하여 불투명도 조절
             Color currentColor = panelImage.color;
             currentColor.a = alpha;
             panelImage.color = currentColor;
 
-            // 시간 업데이트
             elapsedTime += Time.deltaTime;
 
-            // 한 프레임 대기
             yield return null;
         }
+    }
+
+    void EndGame()
+    {
+        // 게임 종료 또는 필요한 종료 로직을 여기에 추가하십시오.
+        Application.Quit();
     }
 }
