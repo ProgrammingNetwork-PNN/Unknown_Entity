@@ -227,7 +227,6 @@ GameObject:
   - component: {fileID: 1592601733651554717}
   - component: {fileID: 351208256676502779}
   - component: {fileID: 1641012181031945477}
-  - component: {fileID: -612979774057907033}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -320,13 +319,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 1
-  runSpeed: 1.5
   lookSpeed: 2
   upperLookLimit: 60
   lowerLookLimit: 60
   footstepsSound: {fileID: 8300000, guid: ebecf16f752f34d4f92d2ecb7aefe241, type: 3}
-  runningFootstepsSound: {fileID: 8300000, guid: d4e5ae3f36829d2439c58ca66133cc5e,
-    type: 3}
 --- !u!65 &1641012181031945477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -348,19 +344,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8, y: 1.94, z: 0.6}
   m_Center: {x: 0, y: 0.81, z: 0}
---- !u!114 &-612979774057907033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1234784050478452859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02e464e51acc6734faeb806142ff671d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keySound: {fileID: 8300000, guid: 858c7471592caef4d8af8ff1b20922cb, type: 3}
 --- !u!1 &1255276822593775794
 GameObject:
   m_ObjectHideFlags: 0

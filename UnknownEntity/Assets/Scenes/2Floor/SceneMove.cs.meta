@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 8e538814c4e65e54e82763a951636d3f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sceneMoveSound: {fileID: 8300000, guid: 22f0d415e87b66549ab30264331ddac3, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

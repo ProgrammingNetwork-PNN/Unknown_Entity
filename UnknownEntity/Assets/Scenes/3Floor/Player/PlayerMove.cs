@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -7,9 +8,10 @@ public class PlayerMove : MonoBehaviour
     public float lookSpeed = 2f;
     public float upperLookLimit = 60f;
     public float lowerLookLimit = 60f;
+    
 
-    public AudioClip footstepsSound;
-    private AudioSource audioSource;
+    public AudioClip footstepsSound;  // 추가: 걷는 소리 클립
+    private AudioSource audioSource;  // 추가: AudioSource
 
     private Rigidbody rb;
     private Animator anim;
@@ -22,9 +24,10 @@ public class PlayerMove : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         anim = GetComponent<Animator>();
 
+        // 추가: AudioSource 초기화
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.loop = false;
-        audioSource.volume = 0.5f;
+        audioSource.volume = 0.5f;  // 원하는 볼륨 값으로 조절
         audioSource.playOnAwake = false;
     }
 
@@ -69,22 +72,16 @@ public class PlayerMove : MonoBehaviour
             anim.SetBool("isRight", false);
         }
 
+        // 이동 속도 일정하게 유지
         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
+        // 대각선 이동 속도 일정하게 유지
         if (movement.magnitude > 1f)
             movement.Normalize();
 
         Vector3 moveDirection = transform.TransformDirection(movement);
-
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, moveDirection, out hit, walkSpeed * Time.deltaTime))
-        {
-            rb.MovePosition(rb.position + moveDirection.normalized * hit.distance);
-        }
-        else
-        {
-            rb.MovePosition(rb.position + moveDirection * walkSpeed * Time.deltaTime);
-        }
+        rb.MovePosition(rb.position + moveDirection * walkSpeed * Time.deltaTime);
+        rb.velocity = moveDirection * walkSpeed;
 
         float mouseX = Input.GetAxis("Mouse X") * lookSpeed;
         float mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
@@ -98,8 +95,10 @@ public class PlayerMove : MonoBehaviour
 
         Camera.main.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
 
+        // 추가: 사운드 재생
         if (movement.magnitude > 0.1f && !audioSource.isPlaying)
         {
+            // 추가: 걷는 소리 재생
             audioSource.clip = footstepsSound;
             audioSource.Play();
         }
@@ -108,4 +107,7 @@ public class PlayerMove : MonoBehaviour
             audioSource.Stop();
         }
     }
+  
+
+
 }

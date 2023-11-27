@@ -37,12 +37,14 @@ public class Tutorials1 : MonoBehaviour
                         {
                             // Disable the script
                             shaderEffect.enabled = true;
+                            GameObject.Find("Sound").transform.GetChild(0).gameObject.SetActive(true);
                         }
                     }
                 }
-                GameObject.Find("Sound").transform.GetChild(0).gameObject.SetActive(true);
                 Invoke("ChangeBool", 1f);
+                isCanvasActive = true;
             }
+
             if(count == 3)
             {
                 if(isCanvasActive == false)
@@ -51,6 +53,7 @@ public class Tutorials1 : MonoBehaviour
                     isCanvasActive = !isCanvasActive;
                 }
             }
+
             isCanvasActive = !isCanvasActive;
             // Canvas 상태에 따라 활성화 또는 비활성화
             if (isCanvasActive == true)
@@ -60,20 +63,6 @@ public class Tutorials1 : MonoBehaviour
             else
             {
                 yourCanvas.gameObject.SetActive(isCanvasActive);
-                GameObject playerObject = GameObject.Find("Player");
-                if (playerObject != null)
-                {
-                    Transform cameraTransform = playerObject.transform.Find("Camera");
-                    if (cameraTransform != null)
-                    {
-                        ShaderEffect_CorruptedVram shaderEffect = cameraTransform.GetComponent<ShaderEffect_CorruptedVram>();
-                        if (shaderEffect != null)
-                        {
-                            // Disable the script
-                            shaderEffect.enabled = false;
-                        }
-                    }
-                }
                 count++;
             }
         }
